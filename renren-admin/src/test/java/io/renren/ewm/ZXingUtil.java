@@ -13,10 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * ZXing的方式生成
@@ -55,17 +52,17 @@ public class ZXingUtil {
 
     public static void main(String[] args) throws WriterException {
 //        File logoFile = new File("C:\\Users\\苏义博\\Desktop\\545867340001101702200220-200-200.jpg");
-//        File QrCodeFile = new File("C:\\Users\\苏义博\\Desktop\\01.png");
-//        String url = "123全文ASD座as";
-//        String note = "访问马张斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌访问马张斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌访问马张斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌";
-//        drawLogoQRCode(logoFile, QrCodeFile, url, note);
-        long startTime = System.currentTimeMillis();
-        for (int i = 0; i < 1000000; i++) {
-            Date date = new Date();
-            date.toString();
-        }
-        long endTime = System.currentTimeMillis();
-        System.out.println(endTime - startTime);
+        File logoFile = new File("C:\\Users\\Admin\\Desktop\\1.jpg");
+        File QrCodeFile = new File("C:\\Users\\Admin\\Desktop\\05.png");
+        String url = "123全文ASD座as";
+        String note = "访问马张斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌";
+        drawLogoQRCode(logoFile, QrCodeFile, url, note);
+//        long startTime = System.currentTimeMillis();
+//        for (int i = 0; i < 1000000; i++) {
+//            String replace = UUID.randomUUID().toString().replace("-", "");
+//        }
+//        long endTime = System.currentTimeMillis();
+//        System.out.println(endTime - startTime);
 
     }
 
@@ -116,7 +113,7 @@ public class ZXingUtil {
                     int strWidth1 = outg.getFontMetrics().stringWidth(note1);
                     int strWidth2 = outg.getFontMetrics().stringWidth(note2);
                     outg.drawString(note1, 200 - strWidth1 / 2, height + (outImage.getHeight() - height) / 2 + 12);
-                    BufferedImage outImage2 = new BufferedImage(400, 485, BufferedImage.TYPE_4BYTE_ABGR);
+                    BufferedImage outImage2 = new BufferedImage(WIDTH, (HEIGHT + FONT_SIZE * 3), BufferedImage.TYPE_4BYTE_ABGR);
                     Graphics2D outg2 = outImage2.createGraphics();
                     outg2.drawImage(outImage, 0, 0, outImage.getWidth(), outImage.getHeight(), null);
                     outg2.setColor(Color.BLACK);
