@@ -1,4 +1,4 @@
-package io.renren.ewm;
+package io.renren.modules.ewm.utils;
 
 
 import com.google.zxing.BarcodeFormat;
@@ -7,21 +7,28 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
- * ZXing的方式生成
+ * ZXIng的方式生成
  *
  * @author suyibo
  * @date 2018/10/9 14:26
  */
-public class ZXingUtil {
+public class ZXIngUtil {
 
 
     /**
@@ -50,20 +57,30 @@ public class ZXingUtil {
         }
     };
 
+    private static BlockingQueue queue = new LinkedBlockingDeque<>();
+
     public static void main(String[] args) throws WriterException {
-//        File logoFile = new File("C:\\Users\\苏义博\\Desktop\\545867340001101702200220-200-200.jpg");
-        File logoFile = new File("C:\\Users\\Admin\\Desktop\\1.jpg");
-        File QrCodeFile = new File("C:\\Users\\Admin\\Desktop\\05.png");
+        File logoFile = new File("C:\\Users\\苏义博\\Desktop\\545867340001101702200220-200-200.jpg");
+//        File logoFile = new File("C:\\Users\\Admin\\Desktop\\1.jpg");
+
         String url = "123全文ASD座as";
         String note = "访问马张斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌斌";
-        drawLogoQRCode(logoFile, QrCodeFile, url, note);
-//        long startTime = System.currentTimeMillis();
-//        for (int i = 0; i < 1000000; i++) {
-//            String replace = UUID.randomUUID().toString().replace("-", "");
-//        }
-//        long endTime = System.currentTimeMillis();
-//        System.out.println(endTime - startTime);
 
+        long startTime = System.currentTimeMillis();
+
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 20, 1, TimeUnit.HOURS, queue);
+
+        for (int i = 0; i < 10000; i++) {
+            System.out.printf("执行-->%s\n", i);
+            threadPoolExecutor.execute(() -> {
+                File QrCodeFile = new File("C:\\Users\\苏义博\\Desktop\\img\\" + UUID.randomUUID() + ".png");
+                drawLogoQRCode(logoFile, QrCodeFile, url, note);
+                System.err.printf("线程执行完毕-->%s", Thread.currentThread().getName());
+            });
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println(endTime - startTime);
+        threadPoolExecutor.shutdown();
     }
 
     // 生成带logo的二维码图片
