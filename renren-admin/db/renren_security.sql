@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2018-10-10 19:40:15
+Date: 2018-10-11 17:27:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,6 +61,11 @@ CREATE TABLE `code_record` (
   `batch_id` int(16) DEFAULT NULL COMMENT '批次id',
   `num` int(16) DEFAULT NULL COMMENT '产生数量',
   `operator_id` varchar(64) DEFAULT NULL COMMENT '操作人员id',
+  `logo_id` int(16) DEFAULT NULL COMMENT 'logo图片id',
+  `font_size` int(16) DEFAULT NULL COMMENT '文字大小',
+  `font_type` varchar(16) DEFAULT NULL COMMENT '字体类型',
+  `code_heigh` int(16) DEFAULT NULL COMMENT '二维码高(像素）',
+  `code_width` int(16) DEFAULT NULL COMMENT '二维码宽(像素)',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`record_id`)
@@ -68,6 +73,25 @@ CREATE TABLE `code_record` (
 
 -- ----------------------------
 -- Records of code_record
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for logo
+-- ----------------------------
+DROP TABLE IF EXISTS `logo`;
+CREATE TABLE `logo` (
+  `logo_id` int(16) NOT NULL AUTO_INCREMENT COMMENT 'logo图片id',
+  `logo_name` varchar(64) DEFAULT NULL COMMENT '图片名称',
+  `logo_type` varchar(16) DEFAULT NULL COMMENT '图片类型',
+  `logo_heigh` varchar(16) DEFAULT NULL COMMENT '图片宽度',
+  `logo_width` varchar(16) DEFAULT NULL COMMENT '图片高度',
+  `logo_size` varchar(16) DEFAULT NULL COMMENT '图片大小',
+  `logo_file` mediumblob COMMENT '图片文件',
+  PRIMARY KEY (`logo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of logo
 -- ----------------------------
 
 -- ----------------------------
@@ -225,7 +249,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('RenrenScheduler', 'DESKTOP-SASKSHB1539168595251', '1539171614639', '15000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('RenrenScheduler', 'DESKTOP-SASKSHB1539168595251', '1539250054537', '15000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -326,6 +350,7 @@ CREATE TABLE `qr_code` (
   `use_num` int(16) DEFAULT NULL COMMENT '扫描次数',
   `status` varchar(16) DEFAULT NULL COMMENT '状态1-待验证2-已验证3-失效',
   `operator_id` varchar(64) DEFAULT NULL COMMENT '操作人id',
+  `record_id` int(16) DEFAULT NULL COMMENT '记录id',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`unique_id`)
@@ -334,7 +359,7 @@ CREATE TABLE `qr_code` (
 -- ----------------------------
 -- Records of qr_code
 -- ----------------------------
-INSERT INTO `qr_code` VALUES ('64038b42-a57f-4df5-8662-d2060dfffa19', '123', '2', '2', '1', '2018-10-10 15:07:17', '2018-10-10 15:07:17');
+INSERT INTO `qr_code` VALUES ('64038b42-a57f-4df5-8662-d2060dfffa19', '123', '2', '2', '1', null, '2018-10-10 15:07:17', '2018-10-10 15:07:17');
 
 -- ----------------------------
 -- Table structure for schedule_job
